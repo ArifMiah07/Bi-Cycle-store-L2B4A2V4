@@ -35,6 +35,7 @@ const productSchema = new Schema<TProduct, ProductModel>({
     inStock: {
         type: Boolean,
         required: [true, "In-stock status is required"],
+        default: true,
     },
 });
 
