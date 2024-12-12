@@ -11,8 +11,6 @@ async function main() {
     app.listen(config.port, ()=>{
         console.log(`Bicycle app server is running on Port : ${config.port} `);
     })
-
-    // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
  }
  catch(err){
     console.log(err);
