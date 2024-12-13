@@ -11,11 +11,11 @@ app.use(express.json());
 app.use(cors());
 
 //application route
-app.use('/api', productRoutes);
+app.use('/api/products', productRoutes);
 
 //get controller
 const getController = (req: Request, res: Response)=>{
-    res.send("Hello World!");
+    res.send("Hello world!");
 }
 //home
 app.get('/', getController);

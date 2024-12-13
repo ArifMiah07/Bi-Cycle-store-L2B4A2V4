@@ -1,16 +1,16 @@
 
 import { Product } from "../product.model";
-import { TProduct } from "./product.interface";
+import { TBicycle } from "./product.interface";
 
 
-const createBicyclesIntoDb = async (productData : TProduct)=>{
-    const result = await Product.create(productData);
+const createBicyclesIntoDb = async (bicycleData : TBicycle)=>{
+    const result = await Product.create(bicycleData);
 
     return result;
 };
 
 const getAllBicyclesFromDb = async(searchTerm? : string)=>{
-    console.log("Search Term:", searchTerm);
+    // console.log("Search Term:", searchTerm);
     let filter = {};
     if(searchTerm){
         filter = {$or: [{name:  { $regex: searchTerm, $options: 'i' }},{brand:  { $regex: searchTerm, $options: 'i' }}, {type:  { $regex: searchTerm, $options: 'i' }}]}//using $or operator for one matching query value;
@@ -24,9 +24,25 @@ const getAllBicyclesFromDb = async(searchTerm? : string)=>{
     return result;
     
 }
+// const getSingleStudentsFromDB = async (id: string) => {
+//     // const result = await Student.findOne({ id });
+//     const result = await Student.aggregate([
+//       //pipeline 1
+//       { $match: { id: id } },
+//     ]);
+//     return result;
+//   };
+
+const getASpecificBicycleFromDb = async(_id : string)=>{
+    const result = await Product.findOne({_id})
+
+    return result;
+
+}
 
 
 export const productServices = {
-    createProductIntoDb: createBicyclesIntoDb,
-    getAllProductsFromDb: getAllBicyclesFromDb,
+    createBicyclesIntoDb,
+    getAllBicyclesFromDb,
+    getASpecificBicycleFromDb,
 }

@@ -1,6 +1,6 @@
 import { Model } from "mongoose";
 
-export type TProduct = {
+export type TBicycle = {
     name: string;
     brand: string;
     price: number;
@@ -19,4 +19,4 @@ export type TProduct = {
 //     isUserExist(id: string) : Promise<TStudent | null> 
 //  }
  
-export type ProductModel = Model<TProduct, Record<string, never>>;
+export type BicycleModel = Model<TBicycle>;

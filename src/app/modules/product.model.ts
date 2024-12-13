@@ -1,8 +1,8 @@
 import { Schema, model } from 'mongoose';
-import { TProduct, ProductModel } from './product/product.interface';
+import { TBicycle, BicycleModel } from './product/product.interface';
 
 // Define the Product schema
-const productSchema = new Schema<TProduct, ProductModel>(
+const productSchema = new Schema<TBicycle, BicycleModel>(
   {
     name: {
       type: String,
@@ -45,6 +45,6 @@ const productSchema = new Schema<TProduct, ProductModel>(
 );
 
 //model
-export const Product = model<TProduct, ProductModel>('Product', productSchema);
+export const Product = model<TBicycle, BicycleModel>('Product', productSchema);
 
 // export const Student = model<TStudent, StudentModel>('Student', studentSchema);
