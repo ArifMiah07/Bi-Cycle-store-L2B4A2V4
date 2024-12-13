@@ -34,10 +34,22 @@ const getAllBicyclesFromDb = async(searchTerm? : string)=>{
 //   };
 
 const getASpecificBicycleFromDb = async(_id : string)=>{
-    const result = await Product.findOne({_id})
-
+    const result = await Product.findOne({_id});
     return result;
 
+}
+
+const updateABicycleFromDb = async(productId: string, updatedData : any)=>{
+    try{
+        const result = await Product.updateOne(
+            {_id: productId},
+            {$set: updatedData},
+            {new : true},
+        )
+        return result;
+    }catch(err : any){
+        throw new Error('Error updating bicycle: ' + err.message);
+    }
 }
 
 
@@ -45,4 +57,5 @@ export const productServices = {
     createBicyclesIntoDb,
     getAllBicyclesFromDb,
     getASpecificBicycleFromDb,
+    updateABicycleFromDb,
 }

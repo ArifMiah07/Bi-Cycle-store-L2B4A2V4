@@ -12,6 +12,8 @@ router.get('/', productController.getAllBicycles);
 
 router.get('/:productId', productController.getASpecificBicycle);
 
+router.put('/:productId', productController.updateABicycle);
+
 export const productRoutes = router;
 
 // No overload matches this call.
