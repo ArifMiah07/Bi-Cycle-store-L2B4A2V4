@@ -25,6 +25,7 @@ const productValidationSchema = z.object({
   inStock: z
     .boolean({ required_error: 'InStock is required' })
     .refine((value) => typeof value === 'boolean', 'InStock must be a boolean'),
+    isDeleted: z.boolean().default(false),
 });
 
 

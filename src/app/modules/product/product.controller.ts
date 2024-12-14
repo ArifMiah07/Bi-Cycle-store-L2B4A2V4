@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { productServices } from './product.service';
 import productValidationSchema from './product.validation';
+// import mongoose from 'mongoose';
 
 const createBicycle = async (req: Request, res: Response) => {
   try {
@@ -65,8 +66,8 @@ const getASpecificBicycle = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
     const result = await productServices.getASpecificBicycleFromDb(productId);
-     // checking result is true or not
-     if (!result) {
+    // checking result is true or not
+    if (!result) {
       return res.status(404).json({
         success: false,
         message: `Product with ID ${productId} not found.`,
@@ -77,7 +78,7 @@ const getASpecificBicycle = async (req: Request, res: Response) => {
     // If the product is found, return the product details
     res.status(200).json({
       success: true,
-      message: "Specific Bicycle is retrieved successfully!",
+      message: 'Specific Bicycle is retrieved successfully!',
       data: result,
     });
   } catch (err: any) {
@@ -89,12 +90,15 @@ const getASpecificBicycle = async (req: Request, res: Response) => {
   }
 };
 
-const  updateABicycle = async(req: Request, res: Response)=>{
+const updateABicycle = async (req: Request, res: Response) => {
   try {
-    const {productId} = req.params;
+    const { productId } = req.params;
     const updatedData = req.body;
 
-    const result = await productServices.updateABicycleFromDb(productId, updatedData);
+    const result = await productServices.updateABicycleFromDb(
+      productId,
+      updatedData,
+    );
 
     // Checking if a document was matched and updated or not
     if (result.matchedCount === 0) {
@@ -103,28 +107,62 @@ const  updateABicycle = async(req: Request, res: Response)=>{
         message: `Product with ID ${productId} not found.`,
       });
     }
-    
+
     res.status(200).json({
       success: true,
-      message: "Bicycle updated successfully",
+      message: 'Bicycle updated successfully',
       data: result,
-    })
-
-  } catch (err : any) {
+    });
+  } catch (err: any) {
     res.status(500).json({
       success: false,
-      message: err.message || "Something went wrong",
+      message: err.message || 'Something went wrong',
       error: {
-        name: err.name || "Error",
+        name: err.name || 'Error',
         details: err.details,
       },
     });
   }
-}
+};
+
+//delete a bicycle
+const deleteABicycle = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+
+    //ck- throw an error if ObjectId is invalid
+    const result = await productServices.deleteABicycleFromDb(productId);
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        message: `Product with ID ${productId} not found.`,
+        error: 'No product found with the provided ID'
+      });
+    }
+
+    res.status(200).json({
+      message: 'Bicycle deleted successfully',
+      success: true,
+      data: result
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      message: 'An error occurred while deleting the bicycle',
+      success: false,
+      error: {
+        name: err.name || 'UnknownError',
+        details: err.message || 'An unexpected error occurred',
+      },
+      stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
+    });
+  }
+};
+
 
 export const productController = {
   createBicycle,
   getAllBicycles,
   getASpecificBicycle,
   updateABicycle,
+  deleteABicycle,
 };
