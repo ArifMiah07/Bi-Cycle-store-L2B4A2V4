@@ -1,7 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { TBicycle, BicycleModel } from './product/product.interface';
 
-
 // Define the Product schema
 const productSchema = new Schema<TBicycle, BicycleModel>(
   {
@@ -42,38 +41,30 @@ const productSchema = new Schema<TBicycle, BicycleModel>(
     isDeleted: {
       type: Boolean,
       default: false,
-    }
+    },
   },
   {
     timestamps: true,
   },
 );
 
-
-//using middleware for delete operation
-
-
-//query middleware
-
-productSchema.pre('find', async function(next){
-  // console.log(this, 'hi what app');
-  this.find({isDeleted: {$ne : true}});
+//using //query middleware for delete operation
+productSchema.pre('find', async function (next) {
+  this.find({ isDeleted: { $ne: true } });
   next();
-})
-productSchema.pre('findOne', async function(next){
-  // console.log(this, 'hi what app');
-  this.find({isDeleted: {$ne : true}});
+});
+
+productSchema.pre('findOne', async function (next) {
+  this.findOne({ isDeleted: { $ne: true } });
   next();
-})
+});
 
-//[{'$match': {isDeleted: {$ne: true}}}, { '$match': { id: 'ST20241110' } }]
-
-productSchema.pre('aggregate',  async function(next){
-  this.pipeline().unshift({$match: {isDeleted : {$ne: true}}});
+productSchema.pre('aggregate', async function (next) {
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
   next();
-})
+});
 
-
+//
 
 //model
 export const Product = model<TBicycle, BicycleModel>('Product', productSchema);

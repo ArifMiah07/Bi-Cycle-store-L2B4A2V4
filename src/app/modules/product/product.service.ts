@@ -1,16 +1,15 @@
 import { Product } from '../product.model';
 import { TBicycle } from './product.interface';
 
-const createBicyclesIntoDb = async (bicycleData: TBicycle) => {
-  // if(await Product.isProductExist(bicycleData._id)){
-  //     throw new Error("Product already exist");
-  // }
-  //as mongodb creating a unique _id every time so we don't need to check product exit or not.
 
+//create a bicycle
+const createBicyclesIntoDb = async (bicycleData: TBicycle) => {
   const result = await Product.create(bicycleData);
   return result;
 };
 
+
+//get all bicycle
 const getAllBicyclesFromDb = async (searchTerm?: string) => {
   // console.log("Search Term:", searchTerm);
   let filter = {};
@@ -26,22 +25,23 @@ const getAllBicyclesFromDb = async (searchTerm?: string) => {
   const result = await Product.find(filter).sort({ createdAt: -1 });
   return result;
 };
-// const getSingleStudentsFromDB = async (id: string) => {
-//     // const result = await Student.findOne({ id });
-//     const result = await Student.aggregate([
-//       //pipeline 1
-//       { $match: { id: id } },
-//     ]);
-//     return result;
-//   };
 
+//get a specific bicycle
 const getASpecificBicycleFromDb = async (_id: string) => {
   const result = await Product.findOne({ _id });
   return result;
 };
 
+
+//update a specific bicycle
 const updateABicycleFromDb = async (productId: string, updatedData: any) => {
   try {
+    // Checking if the product exists
+    const existingProduct = await Product.findById(productId);
+    if (!existingProduct) {
+      throw new Error(`Product with ID ${productId} not found.`);
+    }
+
     const result = await Product.updateOne(
       { _id: productId },
       { $set: updatedData },
@@ -53,7 +53,7 @@ const updateABicycleFromDb = async (productId: string, updatedData: any) => {
   }
 };
 
-//delete a bicycle from db
+//soft delete a bicycle from db
 const deleteABicycleFromDb = async (_id: string) => {
   //checking if id already exist or not
   const existingProduct = await Product.findOne({ _id, isDeleted: false });
@@ -74,11 +74,6 @@ const deleteABicycleFromDb = async (_id: string) => {
 
   return result;
 };
-//delete students
-// const deleteStudentsFromDB = async (id: string) => {
-//     const result = await Student.updateOne({ id }, { isDeleted: true });
-//     return result;
-//   };
 
 export const productServices = {
   createBicyclesIntoDb,

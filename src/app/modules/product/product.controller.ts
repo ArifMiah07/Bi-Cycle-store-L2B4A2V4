@@ -17,16 +17,19 @@ const createBicycle = async (req: Request, res: Response) => {
     });
   } catch (err: any) {
     res.status(500).json({
+      message: 'An error occurred while creating the bicycle',
       success: false,
-      message: err.message || 'Something went wrong!',
-      error: err,
+      error: {
+        name: err.name || 'UnknownError',
+        details: err.message || 'An unexpected error occurred',
+      },
+      stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
     });
   }
   // next();
 };
 
-//get all products
-
+//get all products/bicycles
 const getAllBicycles = async (req: Request, res: Response) => {
   try {
     const { searchTerm } = req.query;
@@ -51,12 +54,13 @@ const getAllBicycles = async (req: Request, res: Response) => {
     });
   } catch (err: any) {
     res.status(500).json({
+      message: 'An error occurred while reading the bicycle',
       success: false,
-      message: err.message || 'Something went wrong',
       error: {
-        name: err.name || 'Error',
-        details: err.details,
+        name: err.name || 'UnknownError',
+        details: err.message || 'An unexpected error occurred',
       },
+      stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
     });
   }
   // next()
@@ -81,11 +85,15 @@ const getASpecificBicycle = async (req: Request, res: Response) => {
       message: 'Specific Bicycle is retrieved successfully!',
       data: result,
     });
-  } catch (err: any) {
+  }catch (err: any) {
     res.status(500).json({
+      message: 'An error occurred while reading a specific bicycle',
       success: false,
-      message: err.message || 'Something went wrong!',
-      error: err,
+      error: {
+        name: err.name || 'UnknownError',
+        details: err.message || 'An unexpected error occurred',
+      },
+      stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
     });
   }
 };
@@ -115,12 +123,13 @@ const updateABicycle = async (req: Request, res: Response) => {
     });
   } catch (err: any) {
     res.status(500).json({
+      message: 'An error occurred while updating the bicycle',
       success: false,
-      message: err.message || 'Something went wrong',
       error: {
-        name: err.name || 'Error',
-        details: err.details,
+        name: err.name || 'UnknownError',
+        details: err.message || 'An unexpected error occurred',
       },
+      stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
     });
   }
 };
@@ -136,14 +145,14 @@ const deleteABicycle = async (req: Request, res: Response) => {
       return res.status(404).json({
         success: false,
         message: `Product with ID ${productId} not found.`,
-        error: 'No product found with the provided ID'
+        error: 'No product found with the provided ID',
       });
     }
 
     res.status(200).json({
       message: 'Bicycle deleted successfully',
       success: true,
-      data: result
+      data: result,
     });
   } catch (err: any) {
     res.status(500).json({
@@ -157,7 +166,6 @@ const deleteABicycle = async (req: Request, res: Response) => {
     });
   }
 };
-
 
 export const productController = {
   createBicycle,

@@ -1,14 +1,14 @@
-import { Model } from "mongoose";
+import { Model } from 'mongoose';
 
 export type TBicycle = {
-    name: string;
-    brand: string;
-    price: number;
-    type: 'Mountain' | 'Road' | 'Hybrid' | 'BMX' | 'Electric'
-    description: string;
-    quantity : number;
-    inStock: boolean;
-    isDeleted: boolean,
-}
- 
+  name: string;
+  brand: string;
+  price: number;
+  type: 'Mountain' | 'Road' | 'Hybrid' | 'BMX' | 'Electric';
+  description: string;
+  quantity: number;
+  inStock: boolean;
+  isDeleted: boolean;
+};
+
 export type BicycleModel = Model<TBicycle>;

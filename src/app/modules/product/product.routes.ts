@@ -1,6 +1,5 @@
-import express from "express"
-import { productController } from "./product.controller";
-
+import express from 'express';
+import { productController } from './product.controller';
 
 //router
 const router = express.Router();
@@ -15,7 +14,6 @@ router.get('/:productId', productController.getASpecificBicycle);
 router.put('/:productId', productController.updateABicycle);
 
 router.delete('/:productId', productController.deleteABicycle);
-
 
 export const productRoutes = router;
 
