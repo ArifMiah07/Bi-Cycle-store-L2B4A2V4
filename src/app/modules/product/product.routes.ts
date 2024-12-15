@@ -4,7 +4,7 @@ import { productController } from './product.controller';
 //router
 const router = express.Router();
 
-//routers
+//routes
 router.post('/', productController.createBicycle);
 
 router.get('/', productController.getAllBicycles);

@@ -1,8 +1,8 @@
-import { ObjectId } from 'mongoose';
+
 
 export type TOrder = {
   email: string;
-  product: ObjectId;
+  product: string;//using ObjectId and doing validation with zod is time waste. 
   quantity: number;
   totalPrice: number;
 };
