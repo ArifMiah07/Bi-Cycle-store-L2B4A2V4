@@ -5,10 +5,10 @@ import orderValidationSchema from './order.validation';
 
 const orderABicycle = async (req: Request, res: Response) => {
   try {
-    const { email, product, quantity, totalPrice } = req.body;
+    const { orderData } = req.body;
 
     // Validate with Zod
-    const zodParsedData = orderValidationSchema.parse({ email, product, quantity, totalPrice });
+    const zodParsedData = orderValidationSchema.parse(orderData);
 
     // Call the service function to process the order
     const result = await orderServices.orderABicycleFromDb(zodParsedData);
