@@ -15,7 +15,7 @@ const orderABicycle = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      message: 'Bicycle ordered successfully',
+      message: 'Order created successfully',
       data: result,
     });
   } catch (err: unknown) {
@@ -31,7 +31,7 @@ const orderABicycle = async (req: Request, res: Response) => {
       });
     } else {
       res.status(500).json({
-        message: 'An unexpected error occurred',
+        message: 'An unexpected error occurred while created order ',
         success: false,
         error: {
           name: 'UnknownError',
@@ -42,6 +42,27 @@ const orderABicycle = async (req: Request, res: Response) => {
   }
 };
 
+//
+// revenue
+export const getRevenue = async (req: Request, res: Response) => {
+  try {
+    const totalRevenue = await orderServices.calculateRevenue();
+    res.status(200).json({
+      message: "Revenue calculated successfully",
+      status: true,
+      data: { totalRevenue },
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      message: "Error calculating revenue",
+      status: false,
+      error: error.message,
+    });
+  }
+};
+
+
 export const orderController = {
   orderABicycle,
+  getRevenue,
 };

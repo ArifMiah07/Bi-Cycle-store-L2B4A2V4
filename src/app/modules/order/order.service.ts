@@ -47,11 +47,23 @@ const orderABicycleFromDb = async (orderData: TOrder) => {
   return result;
 };
 
-
-
+//
+const calculateRevenue = async () => {
+  const result = await Order.aggregate([
+    {
+      $group: {
+        _id: null,
+        totalRevenue: { $sum: "$totalPrice" }, //calculating totalPrice from all orders
+      },
+    },
+  ]);
+  // console.log(result)//[ { _id: null, totalRevenue: 7800 } ]
+  return result[0]?.totalRevenue || 0;
+};
 
 
 
 export const orderServices = {
   orderABicycleFromDb,
+  calculateRevenue,
 };
