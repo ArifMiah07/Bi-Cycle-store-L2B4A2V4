@@ -7,7 +7,7 @@ const router = express.Router();
 
 //routes
 router.post('/', orderController.orderABicycle);
-// router.get('/revenue', );
+router.get('/revenue', );
 
 
 

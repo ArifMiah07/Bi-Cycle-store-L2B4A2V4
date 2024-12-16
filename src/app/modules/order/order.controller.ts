@@ -6,13 +6,13 @@ import orderValidationSchema from './order.validation';
 const orderABicycle = async (req: Request, res: Response) => {
   try {
     const {order : orderData}  = req.body;
-    console.log(req.body, orderData);
+    console.log('re: ',req.body);
+    console.log('or: ', orderData.quantity);
     const zodParsedData = orderValidationSchema.parse(orderData);
 
-    // Call the service function to process the order
+    //
     const result = await orderServices.orderABicycleFromDb(zodParsedData);
 
-    // Send the response
     res.status(200).json({
       success: true,
       message: 'Bicycle ordered successfully',
