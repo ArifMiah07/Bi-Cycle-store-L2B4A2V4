@@ -3,6 +3,8 @@ import { Request, Response } from 'express';
 import {orderServices } from './order.service';  // Correct import from order.service
 import orderValidationSchema from './order.validation';
 
+
+//post a bicycle
 const orderABicycle = async (req: Request, res: Response) => {
   try {
     const {order : orderData}  = req.body;
@@ -42,24 +44,27 @@ const orderABicycle = async (req: Request, res: Response) => {
   }
 };
 
-//
-// revenue
-export const getRevenue = async (req: Request, res: Response) => {
+//get revenue
+const getRevenue = async(req: Request, res: Response) =>{
   try {
-    const totalRevenue = await orderServices.calculateRevenue();
+    const totalRevenue = await orderServices.calculateRevenueFromDb();
     res.status(200).json({
       message: "Revenue calculated successfully",
-      status: true,
-      data: { totalRevenue },
-    });
-  } catch (error: any) {
+      success: true,
+      data: {totalRevenue},
+    })
+  } catch (err: any) {
     res.status(500).json({
-      message: "Error calculating revenue",
-      status: false,
-      error: error.message,
+      message: 'An error occurred while calculating total revenue',
+      success: false,
+      error: {
+        name: err.name || 'UnknownError',
+        details: err.message || 'An unexpected error occurred',
+      },
+      stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
     });
   }
-};
+}
 
 
 export const orderController = {
