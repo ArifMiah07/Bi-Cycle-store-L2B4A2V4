@@ -1,10 +1,10 @@
 // const express = require('express')
-import express, { Application, Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { productRoutes } from './app/modules/product/product.routes';
 import { orderRoutes } from './app/modules/order/order.routes';
 
-const app: Application = express();
+const app = express();
 
 //middleware
 app.use(express.json());

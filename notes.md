@@ -38,3 +38,5 @@ Application building continues with the following modules:---<>--<---->--<
 ---->>>--<---->---
 
 installing zod validation <---->  
+
+vercel --prod

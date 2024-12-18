@@ -30,15 +30,16 @@ const createBicycle = async (req: Request, res: Response) => {
 };
 
 //get all products/bicycles
-const getAllBicycles = async (req: Request, res: Response) => {
+const getAllBicycles = async (req: Request, res: Response)=> {
   try {
     const { searchTerm } = req.query;
     const result = await productServices.getAllBicyclesFromDb(
       searchTerm as string,
     );
+    console.log('result from get all bicycle controller', result)
     //if user typing any name, type, brand that doesn't exist ---return error
     if (result.length === 0) {
-      return res.status(404).json({
+      res.status(404).json({
         //i got error here by adding return keyword
         success: false,
         message: 'No products found matching your search criteria.',
@@ -72,7 +73,7 @@ const getASpecificBicycle = async (req: Request, res: Response) => {
     const result = await productServices.getASpecificBicycleFromDb(productId);
     // checking result is true or not
     if (!result) {
-      return res.status(404).json({
+      res.status(404).json({
         success: false,
         message: `Product with ID ${productId} not found.`,
         error: 'No product found with the provided ID',
@@ -110,7 +111,7 @@ const updateABicycle = async (req: Request, res: Response) => {
 
     // Checking if a document was matched and updated or not
     if (result.matchedCount === 0) {
-      return res.status(404).json({
+      res.status(404).json({
         success: false,
         message: `Product with ID ${productId} not found.`,
       });
@@ -142,7 +143,7 @@ const deleteABicycle = async (req: Request, res: Response) => {
     //ck- throw an error if ObjectId is invalid
     const result = await productServices.deleteABicycleFromDb(productId);
     if (!result) {
-      return res.status(404).json({
+      res.status(404).json({
         success: false,
         message: `Product with ID ${productId} not found.`,
         error: 'No product found with the provided ID',
