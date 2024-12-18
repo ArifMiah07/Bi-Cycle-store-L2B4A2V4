@@ -16,7 +16,7 @@ app.use('/api/orders', orderRoutes)
 
 //get controller
 const getController = (req: Request, res: Response) => {
-  res.send('Hello world!');
+  res.send('Bicycle Store backend is running!');
 };
 //home
 app.get('/', getController);
